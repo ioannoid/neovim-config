@@ -10,9 +10,6 @@ vim.o.expandtab = true
 vim.o.smartindent = true
 vim.opt.termguicolors = true
 
--- keymap
-require('keymap')
-
 -- lazy
 require('lazy-config')
 require('lazy').setup({
@@ -35,11 +32,11 @@ require('lazy').setup({
     'SmiteshP/nvim-navic',
     'folke/neodev.nvim',
     'numToStr/Comment.nvim',
+    'saadparwaiz1/cmp_luasnip',
     {
         'lervag/vimtex',
         lazy = false,
     },
-    'saadparwaiz1/cmp_luasnip',
     {
         'folke/which-key.nvim',
         config = function()
@@ -53,6 +50,9 @@ require('lazy').setup({
     { 'akinsho/bufferline.nvim',         tag = 'v3.2.0' },
     { 'akinsho/toggleterm.nvim' }
 })
+
+-- keymap and which-key
+require('keymap')
 
 -- treesitter
 require('nvim-treesitter.configs').setup({
@@ -73,57 +73,7 @@ require('onedark').setup({
 require('onedark').load()
 
 -- nvim-cmp
-local has_words_before = function()
-    unpack = unpack or table.unpack
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local cmp = require('cmp')
-local luasnip = require('luasnip')
-
-cmp.setup({
-    mapping = {
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-                -- You could replace the expand_or_jumpable() calls with expand_or_locally_jumpable()
-                -- they way you will only jump inside the snippet region
-            elseif luasnip.expand_or_jumpable() then
-                luasnip.expand_or_jump()
-            elseif has_words_before() then
-                cmp.complete()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.jumpable( -1) then
-                luasnip.jump( -1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-    },
-    snippet = {
-        expand = function(args)
-            luasnip.lsp_expand(args.body)
-        end
-    },
-    sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'luasnip' },
-    }, {
-        { name = 'buffer' }
-    })
-})
-require('cmp').event:on(
-    'confirm_done',
-    require('nvim-autopairs.completion.cmp').on_confirm_done()
-)
+require('cmp-config')
 
 -- toggleterm
 require('toggleterm').setup({
@@ -155,9 +105,6 @@ require('nvim-tree').setup()
 
 -- vim-illuminate
 require('illuminate').configure()
-
--- which-key
-require('which-key-config')
 
 -- mason
 require("mason").setup({
