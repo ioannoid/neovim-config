@@ -2,7 +2,7 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
-vim.wo.number = true
+vim.wo.relativenumber = true
 vim.o.autoindent = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
@@ -29,7 +29,6 @@ require('lazy').setup({
     'windwp/nvim-autopairs',
     'nvim-lualine/lualine.nvim',
     'nvim-tree/nvim-web-devicons',
-    'SmiteshP/nvim-navic',
     'folke/neodev.nvim',
     'numToStr/Comment.nvim',
     'saadparwaiz1/cmp_luasnip',
@@ -53,6 +52,9 @@ require('lazy').setup({
 
 -- keymap and which-key
 require('keymap')
+
+-- autocommand
+require('autocmd')
 
 -- treesitter
 require('nvim-treesitter.configs').setup({
@@ -93,18 +95,28 @@ require('bufferline').setup({
                 highlight = "Directory",
                 text_align = "left"
             }
-        }
+        },
+        diagnostics = 'nvim_lsp',
+        diagnostics_indicator = function(count, level, diagnostics_dict, context)
+            local s = " "
+            for e, n in pairs(diagnostics_dict) do
+                local sym = e == "error" and " "
+                    or (e == "warning" and " " or "")
+                s = s .. n .. sym
+            end
+            return s
+        end
     }
 })
 
 -- lualine
-require('lualine').setup()
+require("lualine").setup()
 
 -- nvim-tree
 require('nvim-tree').setup()
 
 -- vim-illuminate
-require('illuminate').configure()
+require('illuminate')
 
 -- mason
 require("mason").setup({
@@ -137,7 +149,7 @@ require('lsp-config')
 local null_ls = require('null-ls')
 null_ls.setup({
     sources = {
-        null_ls.builtins.formatting.clang_format,
+        -- null_ls.builtins.formatting.clang_format,
         null_ls.builtins.formatting.ocamlformat
     }
 })
