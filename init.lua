@@ -14,6 +14,7 @@ vim.opt.termguicolors = true
 require('lazy-config')
 require('lazy').setup({
     'neovim/nvim-lspconfig',
+    'rafamadriz/friendly-snippets',
     'williamboman/mason-lspconfig.nvim',
     'mfussenegger/nvim-dap',
     'jose-elias-alvarez/null-ls.nvim',

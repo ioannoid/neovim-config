@@ -32,6 +32,11 @@ require('lspconfig')['ocamllsp'].setup {
     capabilities = capabilities
 }
 
+require('lspconfig')['texlab'].setup {
+    on_attach = on_attach,
+    flags = lsp_flags,
+    capabilities = capabilities
+}
 
 require('lspconfig')['lua_ls'].setup {
     on_attach = on_attach,

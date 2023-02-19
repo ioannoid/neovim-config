@@ -6,8 +6,8 @@ autocmd('TextYankPost', {
     end
 })
 
-autocmd('BufWrite', {
-    callback = function()
-        vim.lsp.buf.format()
-    end
-})
+-- autocmd('BufWrite', {
+--     callback = function()
+--         vim.lsp.buf.format()
+--     end
+-- })
