@@ -1,4 +1,3 @@
--- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer

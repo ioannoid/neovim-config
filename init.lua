@@ -47,7 +47,7 @@ require('lazy').setup({
     { 'navarasu/onedark.nvim',           lazy = false },
     { 'nvim-treesitter/nvim-treesitter', build = ":TSUpdate" },
     { 'nvim-tree/nvim-tree.lua',         tag = 'nightly' },
-    { 'akinsho/bufferline.nvim',         tag = 'v3.2.0' },
+    { 'akinsho/bufferline.nvim',         version = "*" },
     { 'akinsho/toggleterm.nvim' }
 })
 
@@ -59,7 +59,7 @@ require('autocmd')
 
 -- treesitter
 require('nvim-treesitter.configs').setup({
-    ensure_installed = { 'c', 'cpp', 'lua', 'vim', 'help' },
+    ensure_installed = { 'c', 'cpp', 'lua', 'vim', 'ocaml' },
     sync_install = false,
     auto_install = true,
     ignore_install = { 'haskell' },
